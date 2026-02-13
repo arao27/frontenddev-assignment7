@@ -1,5 +1,5 @@
 {
-  "name": "frontenddev-assignment5",
+  "name": "frontenddev-assignment7",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -39,13 +39,13 @@
   "main": "eslint.config.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/arao27/frontenddev-assignment5.git"
+    "url": "git+https://github.com/arao27/frontenddev-assignment7.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/arao27/frontenddev-assignment5/issues"
+    "url": "https://github.com/arao27/frontenddev-assignment7/issues"
   },
-  "homepage": "https://github.com/arao27/frontenddev-assignment5#readme"
+  "homepage": "https://github.com/arao27/frontenddev-assignment7#readme"
 }

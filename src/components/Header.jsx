@@ -8,14 +8,12 @@ function Header({ storeName, cartCount }) {
       <nav>
         <Link to="/">Home</Link>
         <Link to="/products">Products</Link>
-        <Link to="/about">About</Link> {/* optional route */}
-        <Link to="/contact">Contact</Link> {/* optional route */}
+        <Link to="/watchlist">Watchlist</Link>
+        <Link to="/cart">Cart</Link>
       </nav>
       <div className="cart-container">
-        <Link to="/cart">
-          <span className="cart-icon">🛒</span>
-          <span className="cart-count">{cartCount}</span>
-        </Link>
+        <span className="cart-icon">🛒</span>
+        <span className="cart-count">{cartCount}</span>
       </div>
     </header>
   );

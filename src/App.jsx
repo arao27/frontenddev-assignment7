@@ -6,6 +6,8 @@ import HomePage from "./pages/HomePage";
 import ProductsPage from "./pages/ProductsPage";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
 import CartPage from "./pages/CartPage";
+import Watchlist from "./pages/Watchlist"; // NEW
+import { MovieProvider } from "./contexts/MovieContext"; // NEW
 
 function App() {
   // Cart state with localStorage persistence
@@ -23,12 +25,17 @@ function App() {
     setCart([...cart, product]);
   };
 
-  // Remove from cart by id
+  // Remove from cart by id (removes only one instance)
   const removeFromCart = (id) => {
-    setCart(cart.filter((item) => item.id !== id));
+    const index = cart.findIndex((item) => item.id === id);
+    if (index === -1) return; // nothing to remove
+
+    const newCart = [...cart];
+    newCart.splice(index, 1); // remove only the first matching item
+    setCart(newCart);
   };
 
-  // Sample products (same as before)
+  // Sample products
   const products = [
     { id: 1, name: "Wireless Headphones", price: 99.99, image: "https://placehold.co/600x400", description: "Premium noise-cancelling headphones with 30-hour battery life" },
     { id: 2, name: "Smart Watch", price: 249.99, image: "https://placehold.co/600x400", description: "Fitness tracker with heart rate monitor and GPS" },
@@ -39,29 +46,34 @@ function App() {
   ];
 
   return (
-    <Router>
-      <Header storeName="ComponentCorner" cartCount={cart.length} />
-      <Routes>
-        <Route
-          path="/"
-          element={<HomePage products={products} addToCart={addToCart} />}
-        />
-        <Route
-          path="/products"
-          element={<ProductsPage products={products} addToCart={addToCart} />}
-        />
-        <Route
-          path="/product/:id"
-          element={<ProductDetailsPage products={products} addToCart={addToCart} />}
-        />
-        <Route
-          path="/cart"
-          element={<CartPage cartItems={cart} removeFromCart={removeFromCart} />}
-        />
-      </Routes>
-
-      <Footer />
-    </Router>
+    <MovieProvider>
+      <Router>
+        <Header storeName="ComponentCorner" cartCount={cart.length} />
+        <Routes>
+          <Route
+            path="/"
+            element={<HomePage products={products} addToCart={addToCart} />}
+          />
+          <Route
+            path="/products"
+            element={<ProductsPage products={products} addToCart={addToCart} />}
+          />
+          <Route
+            path="/product/:id"
+            element={<ProductDetailsPage products={products} addToCart={addToCart} />}
+          />
+          <Route
+            path="/cart"
+            element={<CartPage cartItems={cart} removeFromCart={removeFromCart} />}
+          />
+          <Route
+            path="/watchlist"
+            element={<Watchlist addToCart={addToCart} />}
+          />
+        </Routes>
+        <Footer />
+      </Router>
+    </MovieProvider>
   );
 }
 

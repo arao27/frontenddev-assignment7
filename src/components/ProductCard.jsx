@@ -1,25 +1,45 @@
-import "./ProductCard.css";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { MovieContext } from "../contexts/MovieContext";
+import "./ProductCard.css";
 
-function ProductCard({ product, onAddToCart }) {
+export default function ProductCard({ product, onAddToCart }) {
+  const { watchlist = [], addToWatchlist, removeFromWatchlist } =
+    useContext(MovieContext);
+
+  if (!product) return null; // safety check
+
+  const isInWatchlist = watchlist.some(item => item.id === product.id);
+
+  const handleWatchlistClick = () => {
+    if (isInWatchlist) {
+      removeFromWatchlist(product.id);
+    } else {
+      addToWatchlist(product);
+    }
+  };
+
   return (
-    <div className="product-card">
-      <img src={product.image} alt={product.name} className="product-image" />
-      <h3 className="product-name">{product.name}</h3>
-      <p className="product-description">{product.description}</p>
-      <p className="product-price">${product.price.toFixed(2)}</p>
+    <div className="product-card" style={{ border: "1px solid #ddd", padding: "1rem", width: "250px" }}>
+      <img
+        src={product.image || "https://placehold.co/600x400"}
+        alt={product.name}
+        style={{ width: "100%" }}
+      />
 
-      {/* Add to cart button */}
-      <button className="add-to-cart-btn" onClick={onAddToCart}>
-        Add to Cart
-      </button>
+      <h3>{product.name}</h3>
+      <p>{product.description}</p>
+      <p>${product.price}</p>
 
-      {/* View Details link */}
-      <Link to={`/product/${product.id}`} className="view-details-link">
-        View Details
+      <Link to={`/product/${product.id}`}>
+        <button>View Details</button>
       </Link>
+
+      <button onClick={onAddToCart}>Add to Cart</button>
+
+      <button onClick={handleWatchlistClick}>
+        {isInWatchlist ? "Remove from Watchlist" : "Add to Watchlist"}
+      </button>
     </div>
   );
 }
-
-export default ProductCard;
